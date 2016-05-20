@@ -1,0 +1,9 @@
+.idea/
+vendor/
+node_modules/
+composer.lock
+
+# Laravel
+bootstrap/cache/
+storage/
+.env

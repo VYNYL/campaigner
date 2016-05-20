@@ -1,0 +1,20 @@
+{
+    "name": "vynyl/campaigner",
+    "description": "A PHP wrapper for the Campaigner API.",
+    "keywords": ["php", "campaigner"],
+    "authors": [
+        {
+            "name": "Nathan Norton",
+            "email": "nnorton@vynyl.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.2",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vynyl\\Campaigner\\": "src"
+        }
+    }
+}
