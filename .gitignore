@@ -6,4 +6,4 @@ composer.lock
 # Laravel
 bootstrap/cache/
 storage/
-.env
+config.php
