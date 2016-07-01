@@ -13,10 +13,10 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__.'/../config/campaigner.php';
+        $configPath = __DIR__.'/../../config/campaigner.php';
 
         $this->publishes([
-            $configPath => config_path('vynyl/campaigner.php')
+            $configPath => config_path('vynyl/campaigner.php'),
         ]);
     }
 

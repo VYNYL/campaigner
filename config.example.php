@@ -2,5 +2,5 @@
 
 return [
     'api_key' => '',
-    'base_url' => 'https://rest.emaildirect.com/v1/',
+    'base_url' => 'https://edapi.campaigner.com/v1/',
 ];
