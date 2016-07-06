@@ -2,6 +2,8 @@
 
 namespace Vynyl\Campaigner\Resources;
 
+use Vynyl\Campaigner\Connection;
+
 class MailingList extends Resource
 {
     /**
@@ -16,6 +18,6 @@ class MailingList extends Resource
 
     public function get()
     {
-        return $this->connection->get('/Lists');
+        return $this->connection->get('Lists');
     }
 }

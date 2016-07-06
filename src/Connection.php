@@ -61,7 +61,7 @@ class Connection
         return $this->client->get($url, [
                 'headers' => $this->headers
             ]
-        );
+        )->getBody();
     }
 
     public function post($resourceUri, $payload)

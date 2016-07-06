@@ -10,7 +10,7 @@ class LaravelConfig implements Config
 
     public function __construct()
     {
-        $this->baseUrl = \Illuminate\Support\Facades\Config::get('campaigner.api_url');
+        $this->baseUrl = \Illuminate\Support\Facades\Config::get('vynyl.campaigner.api_url');
     }
 
     public function getBaseUrl()
