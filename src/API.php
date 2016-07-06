@@ -54,5 +54,4 @@ class API
     {
         return $this->connection();
     }
-
 }
