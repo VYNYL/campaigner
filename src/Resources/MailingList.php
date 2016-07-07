@@ -18,6 +18,7 @@ class MailingList extends Resource
 
     public function get()
     {
-        return $this->connection->get('Lists');
+        $lists = $this->connection->get('/Lists');
+        return $lists['Lists'];
     }
 }

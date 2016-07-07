@@ -58,10 +58,13 @@ class Connection
     public function get($resourceUri)
     {
         $url = $this->getFullURL($resourceUri);
-        return $this->client->get($url, [
+        $response = $this->client->request('GET', $url, [
                 'headers' => $this->headers
             ]
-        )->getBody();
+        );
+        // the Guzzle implementation has changed, so this is now required
+        $body = (string) $response->getBody();
+        return json_decode($body, true);
     }
 
     public function post($resourceUri, $payload)
