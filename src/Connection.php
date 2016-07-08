@@ -67,9 +67,23 @@ class Connection
         return json_decode($body, true);
     }
 
+    /**
+     * Makes a POST request.
+     * @param $resourceUri string
+     * @param $payload string
+     */
     public function post($resourceUri, $payload)
     {
-
+        $url = $this->getFullUrl($resourceUri);
+        $this->setHeader("Content-Type", "application/json");
+        $response = $this->client->request('POST', $url, [
+                'headers' => $this->headers,
+                'body' => $payload,
+            ]
+        );
+        // the Guzzle implementation has changed, so this is now required
+        $body = (string) $response->getBody();
+        return json_decode($body, true);
     }
 
     public function getFullUrl($resourceUri)
