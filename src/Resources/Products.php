@@ -20,4 +20,10 @@ class Products extends Resource
     {
         return $this->connection->get('/Products');
     }
+    
+    public function post($product)
+    {
+        return $this->connection->post('/Products', $product);
+    }
+    
 }
