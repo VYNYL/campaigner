@@ -14,7 +14,7 @@ class SubscriberCollection implements Postable
 
     public function addSubscriber(Subscriber $subscriber)
     {
-        $this->orders[] = $order;
+        $this->subscribers[] = $subscriber;
     }
 
     public function getSubscribers()

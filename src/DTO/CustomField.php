@@ -2,7 +2,7 @@
 
 namespace Vynyl\Campaigner\DTO;
 
-class CustomField
+class CustomField implements Postable
 {
     private $fieldName;
 
@@ -47,5 +47,13 @@ class CustomField
     {
         $this->value = $value;
         return $this;
+    }
+
+    public function toPost()
+    {
+        return [
+            'FieldName' => $this->getFieldName(),
+            'Value' => $this->getValue(),
+        ];
     }
 }

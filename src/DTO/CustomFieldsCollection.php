@@ -2,7 +2,7 @@
 
 namespace Vynyl\Campaigner\DTO;
 
-class CustomFieldCollection implements ResourceCollection
+class CustomFieldsCollection implements ResourceCollection
 {
     private $customFields = [];
 
@@ -25,10 +25,7 @@ class CustomFieldCollection implements ResourceCollection
     {
         $customFields = [];
         foreach ($this->customFields as $key => $customField) {
-            $customFields[] = [
-                'FieldName' => $customField->getFieldName(),
-                'Value' => $customField->getValue(),
-            ];
+            $customFields[] = $customField->toPost();
         }
         return $customFields;
     }

@@ -24,7 +24,7 @@ class Subscriber implements Postable
 
     public function __construct()
     {
-        $this->customFields = new CustomFieldCollection();
+        $this->customFields = new CustomFieldsCollection();
         $this->orders = new OrdersCollection();
     }
 
@@ -119,24 +119,6 @@ class Subscriber implements Postable
     }
 
     /**
-     * @return mixed
-     */
-    public function getOrders()
-    {
-        return $this->orders;
-    }
-
-    /**
-     * @param mixed $orders
-     * @return Subscriber
-     */
-    public function setOrders($orders)
-    {
-        $this->orders = $orders;
-        return $this;
-    }
-
-    /**
      * @return boolean
      */
     public function isForce()
@@ -182,7 +164,7 @@ class Subscriber implements Postable
             'Publications' => $this->getPublications(),
             'Lists' => $this->getLists(),
             'AutoResponderId' => $this->getAutoresponderId(),
-            'Orders' => $this->getOrders(),
+            'Orders' => $this->orders->toArray(),
             'Force' => $this->isForce(),
             'ForcePublications' => $this->isForcePublication(),
         ];
