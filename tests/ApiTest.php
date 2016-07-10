@@ -4,6 +4,10 @@ namespace Vynyl\CampaignerTest;
 
 use \Vynyl\Campaigner\API;
 use \Vynyl\Campaigner\Config\VanillaConfig;
+use Vynyl\Campaigner\DTO\Subscriber;
+use Vynyl\Campaigner\DTO\SubscriberCollection;
+use Vynyl\Campaigner\Resources\Products;
+use Vynyl\Campaigner\Resources\Subscribers;
 
 class ApiTest extends TestCase
 {
@@ -36,12 +40,35 @@ class ApiTest extends TestCase
      * Testing basic connection to the API.  Any valid endpoint can be used.
      * @test
      */
-    public function testAPIConnects()
+//    public function testAPIConnects()
+//    {
+//        $response = $this->connection->get('/Products');
+//        $this->assertEquals(
+//            self::HTTP_OK,
+//            $response->getStatusCode()
+//        );
+//    }
+
+//    public function testAddProduct()
+//    {
+//        $products = new Products($this->connection);
+//        $products->post(['ProductName' => 'someProduct']);
+//    }
+
+    public function testAddOrUpdateMultipleSubscribers()
     {
-        $response = $this->connection->get('/Products');
-        $this->assertEquals(
-            self::HTTP_OK,
-            $response->getStatusCode()
-        );
+
+        $subscribers = new SubscriberCollection();
+        $subscriber = new Subscriber();
+        $subscriber->setEmailAddress('asdf@asdf.com')
+            ->setSourceId(1);
+
+        $subscribers->addSubscriber($subscriber);
+
+        // add orders, order items, custom fields, etc...
+
+        $subscribersResource = new Subscribers($this->connection);
+
+        $subscribersResource->addOrUpdateMultiple($subscribers);
     }
 }
