@@ -2,7 +2,7 @@
 
 namespace Vynyl\Campaigner\DTO;
 
-class SubscriberCollection implements Postable
+class SubscriberCollection implements Postable, ResourceCollection
 {
 
     private $subscribers = [];
@@ -22,13 +22,18 @@ class SubscriberCollection implements Postable
         return $this->subscribers;
     }
 
-    public function toPost()
+    public function toArray()
     {
         $subscribers = [];
-        // Since each postable subscriber returns itself in array form...
         foreach ($this->subscribers as $key => $subscriber) {
             $subscribers[] = $subscriber->toPost();
         }
         return $subscribers;
     }
+
+    public function toPost()
+    {
+        return $this->toArray();
+    }
+
 }
