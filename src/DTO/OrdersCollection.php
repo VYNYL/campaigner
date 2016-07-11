@@ -2,7 +2,7 @@
 
 namespace Vynyl\Campaigner\DTO;
 
-class OrdersCollection implements ResourceCollection
+class OrdersCollection implements ResourceCollection, Postable
 {
     private $orders = [];
 
@@ -25,10 +25,13 @@ class OrdersCollection implements ResourceCollection
     {
         $orders = [];
         foreach ($this->orders as $key => $order) {
-            $orders[] = [
-                // TODO: fill in orders...
-            ];
+            $orders[] = $order->toPost();
         }
         return $orders;
+    }
+
+    public function toPost()
+    {
+        return $this->toArray();
     }
 }

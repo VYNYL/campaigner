@@ -8,8 +8,8 @@ use Vynyl\Campaigner\DTO\SubscriberCollection;
 class Subscribers extends Resource
 {
     /**
-     * @var Connection
-     */
+ * @var Connection
+ */
     private $connection;
 
     public function __construct(Connection $connection)
