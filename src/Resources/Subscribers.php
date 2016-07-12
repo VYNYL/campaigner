@@ -19,9 +19,11 @@ class Subscribers extends Resource
 
     public function addOrUpdateMultiple(SubscriberCollection $subscriberCollection)
     {
+        $payload = $subscriberCollection->toPost();
+
         return $this->connection->post(
             '/Import/AddOrUpdate',
-            $subscriberCollection->toPost()
+            $payload
         );
     }
 }

@@ -76,9 +76,11 @@ class Connection
     {
         $url = $this->getFullUrl($resourceUri);
         $this->setHeader("Content-Type", "application/json");
+        $json = json_encode($payload, JSON_PRETTY_PRINT);
+
         $response = $this->client->request('POST', $url, [
                 'headers' => $this->headers,
-                'body' => json_encode($payload),
+                'body' => $json,
             ]
         );
         // the Guzzle implementation has changed, so this is now required

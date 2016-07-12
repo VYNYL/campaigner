@@ -5,6 +5,7 @@ namespace Vynyl\CampaignerTest;
 use \DateTime;
 use \Vynyl\Campaigner\API;
 use \Vynyl\Campaigner\Config\VanillaConfig;
+use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\DTO\Order;
 use Vynyl\Campaigner\DTO\OrderItem;
 use Vynyl\Campaigner\DTO\OrdersCollection;
@@ -77,52 +78,53 @@ class ApiTest extends TestCase
         $subscribersResource->addOrUpdateMultiple($subscribers);
     }
 
-    public function testImportMultipleOrders()
+    public function testImportMultipleOrders(Connection $connection)
     {
         $orders = new OrdersCollection();
 
         $order1 = new Order();
-
-        $order1->setEmailAddress("nnorton@vynyl.com");
-        $order1->setOrderNumber(22);
-        $order1->setPurchaseDate(new DateTime());
+        $order1->setEmailAddress("nnorton@vynyl.com")
+           ->setOrderNumber("jasldkjf")
+           ->setPurchaseDate("12/1/2011");
 
         $orderItem1 = new OrderItem();
         $orderItem1->setProductName("name")
-                    ->setSku("12345")
-                    ->setQuantity("2")
-                    ->setUnitPrice("3.33")
-                    ->setWeight("8.1")
-                    ->setStatus("sup");
+            ->setSku("1218")
+            ->setQuantity("2")
+            ->setUnitPrice("3.33")
+            ->setWeight("8.1")
+            ->setStatus("0");
         $order1->getOrderItems()->addOrderItem($orderItem1);
 
         $orderItem2 = new OrderItem();
         $orderItem2->setProductName("new prod")
-            ->setSku("1234567")
+            ->setSku("23456")
             ->setQuantity("3")
             ->setUnitPrice("4.33")
             ->setWeight("2.1")
-            ->setStatus("yoyo");
+            ->setStatus("0");
         $order1->getOrderItems()->addOrderItem($orderItem2);
 
         $order2 = new Order();
+        $order2->setEmailAddress("nnorton@vynyl.com")
+            ->setOrderNumber("1004")
+            ->setPurchaseDate("2011-08-10");
 
         $orderItem3 = new OrderItem();
-        $orderItem3->setProductName("name")
-            ->setSku("12345")
-            ->setQuantity("2")
-            ->setUnitPrice("3.33")
-            ->setWeight("8.1")
-            ->setStatus("sup");
+        $orderItem3->setProductName("new_product")
+            ->setSku("1235456")
+            ->setQuantity("3")
+            ->setUnitPrice("3")
+            ->setWeight("3")
+            ->setStatus("3");
         $order2->getOrderItems()->addOrderItem($orderItem3);
 
-        
-        $ordersResource = new Orders($this->connection);
-        
-        
-        
-        $ordersResource->addMultiple($orders);
+        $orders->addOrder($order1);
+        $orders->addOrder($order2);
 
+        $ordersResource = new Orders($connection);
+
+        $ordersResource->addMultiple($orders);
     }
 
 }

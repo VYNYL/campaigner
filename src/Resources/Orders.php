@@ -2,8 +2,8 @@
 
 namespace Vynyl\Campaigner\Resources;
 
-
 use Vynyl\Campaigner\DTO\OrdersCollection;
+use Vynyl\Campaigner\Connection;
 
 class Orders
 {
@@ -19,10 +19,13 @@ class Orders
 
     public function addMultiple(OrdersCollection $ordersCollection)
     {
+        $payload = $ordersCollection->toPost();
+
         return $this->connection->post(
             '/Orders/Import',
-            $ordersCollection->toPost()
+            $payload
         );
+        
     }
 
 }
