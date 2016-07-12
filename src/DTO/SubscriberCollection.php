@@ -33,7 +33,7 @@ class SubscriberCollection implements Postable, ResourceCollection
 
     public function toPost()
     {
-        return $this->toArray();
+        return [ "Subscribers" => $this->toArray() ];
     }
 
 }

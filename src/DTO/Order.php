@@ -5,13 +5,13 @@ namespace Vynyl\Campaigner\DTO;
 class Order implements Postable
 {
    
-    private $emailAddress;
+    private $emailAddress = "";
 
-    private $orderNumber;
+    private $orderNumber = "";
 
-    private $purchaseDate;
+    private $purchaseDate = "";
 
-    private $orderItems;
+    private $orderItems = "";
 
     public function __construct()
     {
@@ -81,9 +81,11 @@ class Order implements Postable
     {
         return [
             'EmailAddress' => $this->getEmailAddress(),
-            'SKU' => $this->getSku(),
-            'OrderItems' => $this->orderItems->toArray(),
+            'OrderNumber' => $this->getOrderNumber(),
+            'PurchaseDate' => $this->getPurchaseDate(),
+            'Items' => $this->orderItems->toArray(),
         ];
+
     }
 
 }

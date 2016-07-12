@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jasonallen
- * Date: 7/11/16
- * Time: 2:59 PM
- */
 
 namespace Vynyl\Campaigner\DTO;
 
@@ -12,6 +6,11 @@ namespace Vynyl\Campaigner\DTO;
 class OrderItemsCollection implements ResourceCollection
 {
     private $orderItems = [];
+
+    public function __construct()
+    {
+
+    }
     
     public function addOrderItem(OrderItem $orderItem)
     {

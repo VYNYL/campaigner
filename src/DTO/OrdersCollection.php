@@ -32,6 +32,7 @@ class OrdersCollection implements ResourceCollection, Postable
 
     public function toPost()
     {
-        return $this->toArray();
+
+        return [ "Orders" => $this->toArray() ];
     }
 }

@@ -6,21 +6,21 @@ namespace Vynyl\Campaigner\DTO;
 class OrderItem implements Postable
 {
 
-    private $emailAddress;
+    private $emailAddress = "";
 
-    private $purchaseDate;
+    private $purchaseDate = "";
 
-    private $productName;
+    private $productName = "";
 
-    private $sku;
+    private $sku = "";
 
-    private $quantity;
+    private $quantity = "";
 
-    private $unitPrice;
+    private $unitPrice = "";
 
-    private $weight;
+    private $weight = "";
 
-    private $status;
+    private $status = "";
     
     /**
      * @return mixed

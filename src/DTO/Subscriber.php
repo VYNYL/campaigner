@@ -163,7 +163,6 @@ class Subscriber implements Postable
             'SourceID' => $this->getSourceId(),
             'Publications' => $this->getPublications(),
             'Lists' => $this->getLists(),
-            'AutoResponderId' => $this->getAutoresponderId(),
             'Orders' => $this->orders->toArray(),
             'Force' => $this->isForce(),
             'ForcePublications' => $this->isForcePublication(),
