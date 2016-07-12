@@ -65,6 +65,14 @@ class Subscriber implements Postable
     }
 
     /**
+     * @return CustomFieldsCollection
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
+    }
+
+    /**
      * @return array
      */
     public function getPublications()
