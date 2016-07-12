@@ -3,9 +3,9 @@
 namespace Vynyl\Campaigner\Resources;
 
 use Vynyl\Campaigner\Connection;
-use Vynyl\Campaigner\DTO\Product;
+use Vynyl\Campaigner\DTO\ProductCategory;
 
-class Products extends Resource
+class ProductCategories extends Resource
 {
     /**
      * @var Connection
@@ -19,17 +19,17 @@ class Products extends Resource
 
     public function get()
     {
-        return $this->connection->get('/Products');
+        return $this->connection->get('/ProductCategories');
     }
-    
-    public function post(Product $product)
+
+    public function post(ProductCategory $productCategory)
     {
-        $payload = $product->toPost();
+        $payload = $productCategory->toPost();
 
         return $this->connection->post(
-            '/Products',
+            '/ProductCategories',
             $payload
         );
     }
-    
+
 }
