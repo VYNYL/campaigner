@@ -9,9 +9,12 @@ use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\DTO\Order;
 use Vynyl\Campaigner\DTO\OrderItem;
 use Vynyl\Campaigner\DTO\OrdersCollection;
+use Vynyl\Campaigner\DTO\Product;
+use Vynyl\Campaigner\DTO\ProductCategory;
 use Vynyl\Campaigner\DTO\Subscriber;
 use Vynyl\Campaigner\DTO\SubscriberCollection;
 use Vynyl\Campaigner\Resources\Orders;
+use Vynyl\Campaigner\Resources\ProductCategories;
 use Vynyl\Campaigner\Resources\Products;
 use Vynyl\Campaigner\Resources\Subscribers;
 
@@ -78,6 +81,34 @@ class ApiTest extends TestCase
         $subscribersResource->addOrUpdateMultiple($subscribers);
     }
 
+    public function testAddProductCategoryAndProduct(Connection $connection)
+    {
+        $productCategory = new ProductCategory();
+        $productCategory->setName("name")
+            ->setDescription("description")
+            ->setImage("image")
+            ->setUrl("url");
+
+        $productCategoryResource = new ProductCategories($connection);
+        $categoryResponse = $productCategoryResource->post($productCategory);
+        $categoryId = $categoryResponse['CategoryID'];
+
+        $product = new Product();
+        $product->addCategory($categoryId);
+        $product->setCost("2")
+            ->setLongDescription("long description")
+            ->setPrice("3")
+            ->setProductImage("image")
+            ->setProductName("NEWWW")
+            ->setProductURL("url")
+            ->setShortDescription("short description")
+            ->setSku("sku")
+            ->setWeight("2");
+
+        $productResource = new Products($connection);
+        return $productResource->post($product);
+    }
+
     public function testImportMultipleOrders(Connection $connection)
     {
         $orders = new OrdersCollection();
@@ -124,7 +155,7 @@ class ApiTest extends TestCase
 
         $ordersResource = new Orders($connection);
 
-        $ordersResource->addMultiple($orders);
+        return $ordersResource->addMultiple($orders);
     }
 
 }
