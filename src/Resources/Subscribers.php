@@ -3,6 +3,7 @@
 namespace Vynyl\Campaigner\Resources;
 
 use Vynyl\Campaigner\Connection;
+use Vynyl\Campaigner\DTO\Subscriber;
 use Vynyl\Campaigner\DTO\SubscriberCollection;
 
 class Subscribers extends Resource
@@ -23,6 +24,16 @@ class Subscribers extends Resource
 
         return $this->connection->post(
             '/Import/AddOrUpdate',
+            $payload
+        );
+    }
+
+    public function post(Subscriber $subscriber)
+    {
+        $payload = $subscriber->toPost();
+
+        return $this->connection->post(
+            '/Subscribers',
             $payload
         );
     }

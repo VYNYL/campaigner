@@ -168,7 +168,8 @@ class Subscriber implements Postable
         return [
             'EmailAddress' => $this->getEmailAddress(),
             'CustomFields' => $this->customFields->toArray(),
-            'SourceID' => $this->getSourceId(),
+            // Can't include SourceID when adding new in Subscriber@addOrUpdateMultiple
+            //'SourceID' => $this->getSourceId(),
             'Publications' => $this->getPublications(),
             'Lists' => $this->getLists(),
             'Orders' => $this->orders->toArray(),
