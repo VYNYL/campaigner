@@ -88,6 +88,27 @@ class Connection
         return json_decode($body, true);
     }
 
+    /**
+     * Makes a PUT request.
+     * @param $resourceUri string
+     * @param $payload string
+     */
+    public function put($resourceUri, $payload)
+    {
+        $url = $this->getFullUrl($resourceUri);
+        $this->setHeader("Content-Type", "application/json");
+        $json = json_encode($payload, JSON_PRETTY_PRINT);
+
+        $response = $this->client->request('PUT', $url, [
+                'headers' => $this->headers,
+                'body' => $json,
+            ]
+        );
+        // the Guzzle implementation has changed, so this is now required
+        $body = (string) $response->getBody();
+        return json_decode($body, true);
+    }
+
     public function getFullUrl($resourceUri)
     {
         return $this->baseUrl . $resourceUri;
