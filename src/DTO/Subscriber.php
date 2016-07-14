@@ -67,10 +67,10 @@ class Subscriber implements Postable
     /**
      * @return CustomFieldsCollection
      */
-    public function getCustomFields()
-    {
-        return $this->customFields;
-    }
+   public function getCustomFields()
+   {
+       return $this->customFields;
+   }
 
     /**
      * @return array
@@ -168,7 +168,8 @@ class Subscriber implements Postable
         return [
             'EmailAddress' => $this->getEmailAddress(),
             'CustomFields' => $this->customFields->toArray(),
-            'SourceID' => $this->getSourceId(),
+            // for some reason, including any sort of source ID always fails on an initial add with addOrImportMultiple, but works on updates...
+            //'SourceID' => $this->getSourceId(),
             'Publications' => $this->getPublications(),
             'Lists' => $this->getLists(),
             'Orders' => $this->orders->toArray(),
