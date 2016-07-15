@@ -21,6 +21,16 @@ class Products extends Resource
     {
         return $this->connection->get('/Products');
     }
+
+    public function put(Product $product)
+    {
+        $payload = $product->toPost();
+
+        return $this->connection->put(
+            '/Products/' . $product->getProductId(),
+            $payload
+        );
+    }
     
     public function post(Product $product)
     {

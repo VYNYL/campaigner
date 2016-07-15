@@ -5,6 +5,7 @@ namespace Vynyl\Campaigner\DTO;
 
 class Product implements Postable
 {
+    private $productId;
 
     private $productName;
 
@@ -25,6 +26,24 @@ class Product implements Postable
     private $price;
 
     private $categories = [];
+
+    /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     * @return Product
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+        return $this;
+    }
 
     /**
      * @return mixed
