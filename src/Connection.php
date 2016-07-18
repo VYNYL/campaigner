@@ -3,6 +3,8 @@
 namespace Vynyl\Campaigner;
 
 use \GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use Vynyl\Campaigner\Responses\CampaignerResponse;
 
 class Connection
 {
@@ -54,17 +56,14 @@ class Connection
     /**
      * Makes a GET request.
      * @param $resourceUri string
+     * @return CampaignerResponse
      */
     public function get($resourceUri)
     {
-        $url = $this->getFullURL($resourceUri);
-        $response = $this->client->request('GET', $url, [
-                'headers' => $this->headers
-            ]
-        );
-        // the Guzzle implementation has changed, so this is now required
-        $body = (string) $response->getBody();
-        return json_decode($body, true);
+        $options = [
+            'headers' => $this->headers,
+        ];
+        return $this->request('GET', $resourceUri, $options);
     }
 
     /**
@@ -74,18 +73,12 @@ class Connection
      */
     public function post($resourceUri, $payload)
     {
-        $url = $this->getFullUrl($resourceUri);
         $this->setHeader("Content-Type", "application/json");
-        $json = json_encode($payload, JSON_PRETTY_PRINT);
-
-        $response = $this->client->request('POST', $url, [
-                'headers' => $this->headers,
-                'body' => $json,
-            ]
-        );
-        // the Guzzle implementation has changed, so this is now required
-        $body = (string) $response->getBody();
-        return json_decode($body, true);
+        $options = [
+            'headers' => $this->headers,
+            'body' => json_encode($payload, JSON_PRETTY_PRINT),
+        ];
+        return $this->request('POST', $resourceUri, $options);
     }
 
     /**
@@ -95,18 +88,32 @@ class Connection
      */
     public function put($resourceUri, $payload)
     {
-        $url = $this->getFullUrl($resourceUri);
         $this->setHeader("Content-Type", "application/json");
-        $json = json_encode($payload, JSON_PRETTY_PRINT);
+        $options = [
+            'headers' => $this->headers,
+            'body' => json_encode($payload, JSON_PRETTY_PRINT),
+        ];
+        return $this->request('PUT', $resourceUri, $options);
+    }
 
-        $response = $this->client->request('PUT', $url, [
-                'headers' => $this->headers,
-                'body' => $json,
-            ]
-        );
-        // the Guzzle implementation has changed, so this is now required
+    public function request($method, $resourceUri, $options)
+    {
+        $url = $this->getFullURL($resourceUri);
+        $response = $this->client->request($method, $url, $options);
+        return $this->buildResponse($response);
+    }
+
+    /**
+     * @param Response $response
+     */
+    public function buildResponse(Response $response)
+    {
+        // the Guzzle implementation has changed to PSR-7, so casting to string is now required to bypass streaming interface
         $body = (string) $response->getBody();
-        return json_decode($body, true);
+
+        return (new CampaignerResponse())
+            ->setBody(json_decode($body, true))
+            ->setStatusCode($response->getStatusCode());
     }
 
     public function getFullUrl($resourceUri)
