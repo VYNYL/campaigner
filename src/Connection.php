@@ -100,7 +100,8 @@ class Connection
     {
         $url = $this->getFullURL($resourceUri);
         $response = $this->client->request($method, $url, $options);
-        return $this->buildResponse($response);
+        $campaignerResponse = $this->buildResponse($response);
+        return $campaignerResponse->getBody();
     }
 
     /**
