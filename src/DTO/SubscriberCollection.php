@@ -6,7 +6,7 @@ class SubscriberCollection implements Postable, ResourceCollection
 {
 
     private $subscribers = [];
-
+    
     public function __construct()
     {
 
