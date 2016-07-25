@@ -47,6 +47,14 @@ class Subscriber implements Postable
     }
 
     /**
+     * @return OrdersCollection
+     */
+    public function getOrdersCollection()
+    {
+        return $this->orders;
+    }
+
+    /**
      * @return mixed
      */
     public function getSourceId()
@@ -67,7 +75,7 @@ class Subscriber implements Postable
     /**
      * @return CustomFieldsCollection
      */
-    public function getCustomFields()
+    public function getCustomFieldsCollection()
     {
         return $this->customFields;
     }
