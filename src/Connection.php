@@ -3,6 +3,7 @@
 namespace Vynyl\Campaigner;
 
 use \GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use Vynyl\Campaigner\Responses\CampaignerResponse;
 
@@ -99,9 +100,18 @@ class Connection
     public function request($method, $resourceUri, $options)
     {
         $url = $this->getFullURL($resourceUri);
-        $response = $this->client->request($method, $url, $options);
+
+        try {
+            $response = $this->client->request($method, $url, $options);
+        }
+        // guzzle throws a RequestException on 400 responses, which we need to be able to handle gracefully without blowing up
+        catch (RequestException $e) {
+            if ($e->getResponse()->getStatusCode() == '400') {
+                return $this->buildResponse($e->getResponse());
+            }
+        }
         $campaignerResponse = $this->buildResponse($response);
-        return $campaignerResponse->getBody();
+        return $campaignerResponse;
     }
 
     /**
