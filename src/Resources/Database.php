@@ -20,7 +20,7 @@ class Database
 
     public function get()
     {
-        $columns = $this->connection->get('/Database');
+        $columns = $this->connection->get('/Database')->getBody();
         return $columns['DatabaseColumns'];
     }
 
