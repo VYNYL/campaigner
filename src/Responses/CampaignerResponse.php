@@ -4,9 +4,11 @@ namespace Vynyl\Campaigner\Responses;
 
 class CampaignerResponse
 {
-    private $body;
+    protected $body;
 
-    private $statusCode;
+    protected $statusCode;
+
+    protected $errors = [];
 
     public function __construct()
     {
@@ -47,5 +49,20 @@ class CampaignerResponse
     {
         $this->statusCode = $statusCode;
         return $this;
+    }
+
+    public function hasErrors()
+    {
+        return count($this->errors);
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    public function addError($error)
+    {
+        $this->errors[] = $error;
     }
 }

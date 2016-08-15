@@ -5,6 +5,8 @@ namespace Vynyl\Campaigner\Resources;
 
 use Vynyl\Campaigner\DTO\DatabaseColumn;
 use Vynyl\Campaigner\Connection;
+use Vynyl\Campaigner\DTO\DatabaseColumnCollection;
+use Vynyl\Campaigner\Responses\DatabaseResponse;
 
 class Database
 {
@@ -20,8 +22,20 @@ class Database
 
     public function get()
     {
-        $columns = $this->connection->get('/Database')->getBody();
-        return $columns['DatabaseColumns'];
+        $response = $this->connection->get('/Database', new DatabaseResponse());
+        $body = $response->getBody();
+        $databaseColumns = new DatabaseColumnCollection();
+        foreach ($body['DatabaseColumns'] as $column) {
+            $databaseColumn = new DatabaseColumn();
+            $databaseColumn->setColumnName($column['ColumnName'])
+                ->setColumnSize($column['ColumnSize'])
+                ->setColumnType($column['ColumnType'])
+                ->setIsCustom($column['IsCustom'])
+                ->setVariable($column['Variable']);
+            $databaseColumns->addDatabaseColumn($databaseColumn);
+        }
+        $response->setDatabaseColumns($databaseColumns);
+        return $response;
     }
 
     public function post(DatabaseColumn $databaseColumn)
