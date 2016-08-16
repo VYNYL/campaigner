@@ -22,7 +22,7 @@ class Database
 
     public function get()
     {
-        $response = $this->connection->get('/Database', new DatabaseResponse());
+        $response = $this->connection->get('/Database');
         $body = $response->getBody();
         $databaseColumns = new DatabaseColumnCollection();
         foreach ($body['DatabaseColumns'] as $column) {
@@ -34,18 +34,22 @@ class Database
                 ->setVariable($column['Variable']);
             $databaseColumns->addDatabaseColumn($databaseColumn);
         }
-        $response->setDatabaseColumns($databaseColumns);
-        return $response;
+        $databaseResponse = new DatabaseResponse();
+        $databaseResponse->setDatabaseColumns($databaseColumns);
+        return $databaseResponse;
     }
 
     public function post(DatabaseColumn $databaseColumn)
     {
         $payload = $databaseColumn->toPost();
 
-        return $this->connection->post(
+        $response = $this->connection->post(
             '/Database',
-            $payload
+            $payload,
+            new DatabaseColumnAddResponse()
         );
+
+        return $response;
     }
 
 }

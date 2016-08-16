@@ -6,6 +6,7 @@ use \GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response;
+use Vynyl\Campaigner\Responses\ApiResponse;
 use Vynyl\Campaigner\Responses\CampaignerResponse;
 
 class Connection
@@ -60,12 +61,12 @@ class Connection
      * @param $resourceUri string
      * @return CampaignerResponse
      */
-    public function get($resourceUri, CampaignerResponse $campaignerResponse)
+    public function get($resourceUri)
     {
         $options = [
             'headers' => $this->headers,
         ];
-        return $this->request('GET', $resourceUri, $options, $campaignerResponse);
+        return $this->request('GET', $resourceUri, $options);
     }
 
     /**
@@ -73,14 +74,14 @@ class Connection
      * @param $resourceUri string
      * @param $payload string
      */
-    public function post($resourceUri, $payload, CampaignerResponse $campaignerResponse)
+    public function post($resourceUri, $payload)
     {
         $this->setHeader("Content-Type", "application/json");
         $options = [
             'headers' => $this->headers,
             'body' => json_encode($payload, JSON_PRETTY_PRINT),
         ];
-        return $this->request('POST', $resourceUri, $options, $campaignerResponse);
+        return $this->request('POST', $resourceUri, $options);
     }
 
     /**
@@ -88,17 +89,17 @@ class Connection
      * @param $resourceUri string
      * @param $payload string
      */
-    public function put($resourceUri, $payload, CampaignerResponse $campaignerResponse)
+    public function put($resourceUri, $payload)
     {
         $this->setHeader("Content-Type", "application/json");
         $options = [
             'headers' => $this->headers,
             'body' => json_encode($payload, JSON_PRETTY_PRINT),
         ];
-        return $this->request('PUT', $resourceUri, $options, $campaignerResponse);
+        return $this->request('PUT', $resourceUri, $options);
     }
 
-    public function request($method, $resourceUri, $options, CampaignerResponse $campaignerResponse)
+    public function request($method, $resourceUri, $options)
     {
         $url = $this->getFullURL($resourceUri);
 
@@ -112,19 +113,19 @@ class Connection
         } catch (ServerException $e) {
             throw new CampaignerException("An error occurred while accessing the Campaigner API");
         }
-        $campaignerResponse = $this->buildResponse($response, $campaignerResponse);
+        $campaignerResponse = $this->buildResponse($response);
         return $campaignerResponse;
     }
 
     /**
      * @param Response $response
      */
-    public function buildResponse(Response $response, CampaignerResponse $campaignerResponse)
+    public function buildResponse(Response $response)
     {
         // the Guzzle implementation has changed to PSR-7, so casting to string is now required to bypass streaming interface
         $body = (string) $response->getBody();
 
-        return $campaignerResponse
+        return (new ApiResponse())
             ->setBody(json_decode($body, true))
             ->setStatusCode($response->getStatusCode());
     }
