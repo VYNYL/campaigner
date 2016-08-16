@@ -3,10 +3,13 @@
 namespace Vynyl\Campaigner\Resources;
 
 
+use PhpParser\Error;
 use Vynyl\Campaigner\DTO\DatabaseColumn;
 use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\DTO\DatabaseColumnCollection;
+use Vynyl\Campaigner\Responses\DatabaseColumnAddResponse;
 use Vynyl\Campaigner\Responses\DatabaseResponse;
+use Vynyl\Campaigner\Responses\ErrorResponse;
 
 class Database
 {
@@ -45,11 +48,25 @@ class Database
 
         $response = $this->connection->post(
             '/Database',
-            $payload,
-            new DatabaseColumnAddResponse()
+            $payload
         );
 
-        return $response;
+        $body = $response->getBody();
+        $databaseColumnResponse = null;
+        if ($response->getStatusCode != 201) {
+            $databaseColumnResponse = (new ErrorResponse())
+                ->setErrorCode($body['ErrorCode'])
+                ->setMessage($body['Message'])
+                ->setIsError(true);
+        } else {
+            $databaseColumnResponse = (new DatabaseColumnAddResponse())
+                ->setColumnName($body['ColumnName'])
+                ->setColumnSize($body['ColumnSize'])
+                ->setColumnType($body['ColumnType'])
+                ->setIsCustom($body['IsCustom'])
+                ->setVariable($body['Variable']);
+        }
+        return $databaseColumnResponse;
     }
 
 }
