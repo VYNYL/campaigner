@@ -2,9 +2,11 @@
 
 namespace Vynyl\Campaigner\Resources;
 
+use Vynyl\Campaigner\DTO\OrderItem;
 use Vynyl\Campaigner\DTO\OrdersCollection;
 use Vynyl\Campaigner\DTO\Order;
 use Vynyl\Campaigner\Connection;
+use Vynyl\Campaigner\Responses\OrderResponse;
 use Vynyl\Campaigner\Responses\OrdersResponse;
 
 class Orders
@@ -28,10 +30,51 @@ class Orders
     {
         $payload = $order->toPost();
 
-        return $this->connection->put(
+        $response = $this->connection->put(
             '/Orders/' . $order->getOrderNumber(),
             $payload
         );
+        $body = $response->getBody();
+        $orderResponse = null;
+        if (!empty($body['ErrorCode'])) {
+            $orderResponse = (new ErrorResponse())
+                ->setErrorCode($body['ErrorCode'])
+                ->setMessage($body['Message'])
+                ->setIsError(true);
+        } else {
+            $orderResponse = new OrderResponse();
+            $order = new Order();
+            $order->setOrderNumber($body['OrderNumber'])
+                ->setEmailAddress($body['EmailAddress'])
+                ->setPurchaseDate($body['PurchaseDate'])
+                ->setCreated($body['Created'])
+                ->setLastUpdated($body['LastUpdated'])
+                ->setTotalItems($body['TotalItems'])
+                ->setTotalAmount($body['TotalAmount'])
+                ->setTotalWeight($body['TotalWeight'])
+                ->setIsActive($body['IsActive']);
+
+            foreach ($body['OrderItems'] as $item) {
+                $orderItem = new OrderItem();
+                $orderItem->setOrderItemId($item['OrderItemID'])
+                      ->setProductId($item['ProductID'])
+                      ->setOrderNumber($item['OrderNumber'])
+                      ->setEmailAddress($item['EmailAddress'])
+                      ->setProductName($item['ProductName'])
+                      ->setSku($item['SKU'])
+                      ->setQuantity($item['Quantity'])
+                      ->setUnitPrice($item['UnitPrice'])
+                      ->setWeight($item['Weight'])
+                      ->setStatus($item['Status'])
+                      ->setTotalAmount($item['TotalAmount'])
+                      ->setPurchaseDate($item['PurchaseDate'])
+                      ->setCreated($item['Created'])
+                      ->setLastUpdated($item['LastUpdated']);
+                $order->getOrderItems()->addOrderItem($orderItem);
+            }
+            $orderResponse->setOrder($order);
+        }
+        return $orderResponse;
     }
 
     public function addMultiple(OrdersCollection $ordersCollection)
