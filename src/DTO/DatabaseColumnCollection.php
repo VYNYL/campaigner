@@ -29,4 +29,5 @@ class DatabaseColumnCollection implements ResourceCollection
         }
         return $databaseColumns;
     }
+
 }
