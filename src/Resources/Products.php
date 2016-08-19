@@ -4,6 +4,8 @@ namespace Vynyl\Campaigner\Resources;
 
 use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\DTO\Product;
+use Vynyl\Campaigner\Responses\ProductResponse;
+use Vynyl\Campaigner\Responses\ErrorResponse;
 
 class Products extends Resource
 {
@@ -22,24 +24,69 @@ class Products extends Resource
         return $this->connection->get('/Products');
     }
 
+    public function getBySku($sku)
+    {
+        $response = $this->connection->get('/Products/SKU/' . $sku);
+        $body = $response->getBody();
+        $productResponse = new ProductResponse();
+        $productResponse->setProduct($this->formProduct($body));
+        return $productResponse;
+    }
+
     public function put(Product $product)
     {
         $payload = $product->toPost();
-
-        return $this->connection->put(
+        $response = $this->connection->put(
             '/Products/' . $product->getProductId(),
             $payload
         );
+        return $this->getProductResponseFromBody($response);
     }
-    
+
     public function post(Product $product)
     {
         $payload = $product->toPost();
-
-        return $this->connection->post(
+        $response = $this->connection->post(
             '/Products',
             $payload
         );
+        return $this->getProductResponseFromBody($response);
     }
-    
+
+    private function formProduct($body)
+    {
+        $product = new Product();
+        $product->setProductId($body['ProductID'])
+            ->setSku($body['SKU'])
+            ->setProductName($body['ProductName'])
+            ->setLongDescription($body['LongDescription'])
+            ->setShortDescription($body['ShortDescription'])
+            ->setProductURL($body['ProductURL'])
+            ->setProductImage($body['ProductImage'])
+            ->setWeight($body['Weight'])
+            ->setCost($body['Cost'])
+            ->setPrice($body['Price'])
+            ->setActive($body['Active'])
+            ->setCreated($body['Created'])
+            ->setLastUpdated($body['LastUpdated']);
+        return $product;
+    }
+
+    public function getProductResponseFromBody($response)
+    {
+        $body = $response->getBody();
+        $productResponse = null;
+        if (!empty($body['ErrorCode'])) {
+            $productResponse = new ErrorResponse();
+            $productResponse->setErrorCode($body['ErrorCode'])
+                ->setMessage($body['Message'])
+                ->setIsError(true);
+        } else {
+            $productResponse = new ProductResponse();
+            $product = $this->formProduct($body);
+            $productResponse->setProduct($product);
+        }
+        return $productResponse;
+    }
+
 }

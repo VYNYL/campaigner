@@ -2,30 +2,32 @@
 
 namespace Vynyl\Campaigner\Responses;
 
-class OrdersResponse extends CampaignerResponse
+
+class SubscriberResponse extends CampaignerResponse
 {
-    private $ordersSubmitted = 0;
+    private $contactsSubmitted = 0;
 
     private $successes = 0;
 
     public function __construct()
     {
+
     }
 
     /**
      * @return int
      */
-    public function getOrdersSubmitted()
+    public function getContactsSubmitted()
     {
-        return $this->ordersSubmitted;
+        return $this->contactsSubmitted;
     }
 
     /**
-     * @param int $ordersSubmitted
+     * @param int $contactsSubmitted
      */
-    public function setOrdersSubmitted($ordersSubmitted)
+    public function setContactsSubmitted($contactsSubmitted)
     {
-        $this->ordersSubmitted = $ordersSubmitted;
+        $this->contactsSubmitted = $contactsSubmitted;
         return $this;
     }
 
@@ -45,5 +47,4 @@ class OrdersResponse extends CampaignerResponse
         $this->successes = $successes;
         return $this;
     }
-
 }

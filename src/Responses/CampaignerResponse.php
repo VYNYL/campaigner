@@ -23,7 +23,7 @@ class CampaignerResponse
         return $this->isError;
     }
 
-    public function setIsErrors($isError)
+    public function setIsError($isError)
     {
         $this->isError = $isError;
     }

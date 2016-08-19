@@ -6,6 +6,7 @@ use Vynyl\Campaigner\DTO\OrderItem;
 use Vynyl\Campaigner\DTO\OrdersCollection;
 use Vynyl\Campaigner\DTO\Order;
 use Vynyl\Campaigner\Connection;
+use Vynyl\Campaigner\Responses\OrderError;
 use Vynyl\Campaigner\Responses\OrderResponse;
 use Vynyl\Campaigner\Responses\OrdersResponse;
 
@@ -21,6 +22,7 @@ class Orders
         $this->connection = $connection;
     }
 
+    // TODO: if we need this at some point, update to use the response object
     public function getAll()
     {
         return $this->connection->get('/Orders');
@@ -37,8 +39,8 @@ class Orders
         $body = $response->getBody();
         $orderResponse = null;
         if (!empty($body['ErrorCode'])) {
-            $orderResponse = (new ErrorResponse())
-                ->setErrorCode($body['ErrorCode'])
+            $orderResponse = new ErrorResponse();
+            $orderResponse->setErrorCode($body['ErrorCode'])
                 ->setMessage($body['Message'])
                 ->setIsError(true);
         } else {
@@ -95,8 +97,8 @@ class Orders
             $ordersResponse = new OrdersResponse();
             if (!empty($body['Failures'])) {
                 foreach ($body['Failures'] as $failure) {
-                    $orderError = (new OrderError())
-                        ->setEmailAddress($failure['EmailAddress'])
+                    $orderError = new OrderError();
+                    $orderError->setEmailAddress($failure['EmailAddress'])
                         ->setOrderNumber($failure['OrderNumber'])
                         ->setErrorCode($failure['ErrorCode'])
                         ->setMessage($failure['Message']);
