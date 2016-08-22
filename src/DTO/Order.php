@@ -4,14 +4,29 @@ namespace Vynyl\Campaigner\DTO;
 
 class Order implements Postable
 {
-   
+
     private $emailAddress = "";
 
     private $orderNumber = "";
 
     private $purchaseDate = "";
 
-    private $orderItems = "";
+    /**
+     * @var OrderItemsCollection
+     */
+    private $orderItems;
+
+    private $created = "";
+
+    private $lastUpdated = "";
+
+    private $totalItems = 0;
+
+    private $totalAmount = 0;
+
+    private $totalWeight = 0;
+
+    private $isActive = true;
 
     public function __construct()
     {
@@ -86,6 +101,114 @@ class Order implements Postable
             'Items' => $this->orderItems->toArray(),
         ];
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param string $created
+     * @return Order
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastUpdated()
+    {
+        return $this->lastUpdated;
+    }
+
+    /**
+     * @param string $lastUpdated
+     * @return Order
+     */
+    public function setLastUpdated($lastUpdated)
+    {
+        $this->lastUpdated = $lastUpdated;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalItems()
+    {
+        return $this->totalItems;
+    }
+
+    /**
+     * @param int $totalItems
+     * @return Order
+     */
+    public function setTotalItems($totalItems)
+    {
+        $this->totalItems = $totalItems;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * @param int $totalAmount
+     * @return Order
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalWeight()
+    {
+        return $this->totalWeight;
+    }
+
+    /**
+     * @param int $totalWeight
+     * @return Order
+     */
+    public function setTotalWeight($totalWeight)
+    {
+        $this->totalWeight = $totalWeight;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param boolean $isActive
+     * @return Order
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+        return $this;
     }
 
 }

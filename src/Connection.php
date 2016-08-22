@@ -4,7 +4,9 @@ namespace Vynyl\Campaigner;
 
 use \GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response;
+use Vynyl\Campaigner\Responses\ApiResponse;
 use Vynyl\Campaigner\Responses\CampaignerResponse;
 
 class Connection
@@ -103,12 +105,13 @@ class Connection
 
         try {
             $response = $this->client->request($method, $url, $options);
-        }
-        // guzzle throws a RequestException on 400 responses, which we need to be able to handle gracefully without blowing up
-        catch (RequestException $e) {
+        } catch (RequestException $e) {
+            // guzzle throws a RequestException on 400 responses, which we need to be able to handle gracefully without blowing up
             if ($e->getResponse()->getStatusCode() == '400') {
                 return $this->buildResponse($e->getResponse());
             }
+        } catch (ServerException $e) {
+            throw new CampaignerException("An error occurred while accessing the Campaigner API");
         }
         $campaignerResponse = $this->buildResponse($response);
         return $campaignerResponse;
@@ -122,7 +125,7 @@ class Connection
         // the Guzzle implementation has changed to PSR-7, so casting to string is now required to bypass streaming interface
         $body = (string) $response->getBody();
 
-        return (new CampaignerResponse())
+        return (new ApiResponse())
             ->setBody(json_decode($body, true))
             ->setStatusCode($response->getStatusCode());
     }

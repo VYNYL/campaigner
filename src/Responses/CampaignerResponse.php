@@ -4,48 +4,37 @@ namespace Vynyl\Campaigner\Responses;
 
 class CampaignerResponse
 {
-    private $body;
+    protected $errors = [];
 
-    private $statusCode;
+    protected $isError = false;
 
     public function __construct()
     {
 
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBody()
+    public function hasErrors()
     {
-        return $this->body;
+        return count($this->errors);
     }
 
-    /**
-     * @param mixed $body
-     * @return CampaignerResponse
-     */
-    public function setBody($body)
+    public function isError()
     {
-        $this->body = $body;
-        return $this;
+        return $this->isError;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStatusCode()
+    public function setIsError($isError)
     {
-        return $this->statusCode;
+        $this->isError = $isError;
     }
 
-    /**
-     * @param mixed $statusCode
-     * @return CampaignerResponse
-     */
-    public function setStatusCode($statusCode)
+    public function getErrors()
     {
-        $this->statusCode = $statusCode;
-        return $this;
+        return $this->errors;
+    }
+
+    public function addError(Error $error)
+    {
+        $this->errors[] = $error;
     }
 }

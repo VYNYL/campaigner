@@ -12,6 +12,10 @@ class DatabaseColumn
 
     private $columnSize;
 
+    private $isCustom;
+
+    private $variable;
+
     /**
      * @return mixed
      */
@@ -63,6 +67,42 @@ class DatabaseColumn
     public function setColumnSize($columnSize)
     {
         $this->columnSize = $columnSize;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsCustom()
+    {
+        return $this->isCustom;
+    }
+
+    /**
+     * @param mixed $isCustom
+     * @return DatabaseColumn
+     */
+    public function setIsCustom($isCustom)
+    {
+        $this->isCustom = $isCustom;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVariable()
+    {
+        return $this->variable;
+    }
+
+    /**
+     * @param mixed $variable
+     * @return DatabaseColumn
+     */
+    public function setVariable($variable)
+    {
+        $this->variable = $variable;
         return $this;
     }
 

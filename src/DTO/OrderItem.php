@@ -5,6 +5,11 @@ namespace Vynyl\Campaigner\DTO;
 
 class OrderItem implements Postable
 {
+    private $orderItemId;
+
+    private $productId;
+
+    private $orderNumber;
 
     private $emailAddress = "";
 
@@ -21,7 +26,13 @@ class OrderItem implements Postable
     private $weight = "";
 
     private $status = "";
-    
+
+    private $totalAmount;
+
+    private $created;
+
+    private $lastUpdated;
+
     /**
      * @return mixed
      */
@@ -138,4 +149,147 @@ class OrderItem implements Postable
         ];
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOrderItemId()
+    {
+        return $this->orderItemId;
+    }
+
+    /**
+     * @param mixed $orderItemId
+     * @return OrderItem
+     */
+    public function setOrderItemId($orderItemId)
+    {
+        $this->orderItemId = $orderItemId;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     * @return OrderItem
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * @param mixed $orderNumber
+     * @return OrderItem
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * @param string $emailAddress
+     * @return OrderItem
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPurchaseDate()
+    {
+        return $this->purchaseDate;
+    }
+
+    /**
+     * @param string $purchaseDate
+     * @return OrderItem
+     */
+    public function setPurchaseDate($purchaseDate)
+    {
+        $this->purchaseDate = $purchaseDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * @param mixed $totalAmount
+     * @return OrderItem
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     * @return OrderItem
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastUpdated()
+    {
+        return $this->lastUpdated;
+    }
+
+    /**
+     * @param mixed $lastUpdated
+     * @return OrderItem
+     */
+    public function setLastUpdated($lastUpdated)
+    {
+        $this->lastUpdated = $lastUpdated;
+        return $this;
+    }
 }
