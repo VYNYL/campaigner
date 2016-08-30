@@ -89,4 +89,16 @@ class Products extends Resource
         return $productResponse;
     }
 
+    public function addProductToCategories($productId, $categoryIds)
+    {
+        $payload = [
+            'Categories' => $categoryIds
+        ];
+        $response = $this->connection->post(
+            '/Products/' . $productId . '/AddToCategories',
+            $payload
+        );
+        return $this->getProductResponseFromBody($response);
+    }
+
 }

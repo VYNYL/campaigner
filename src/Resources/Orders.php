@@ -9,6 +9,7 @@ use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\Responses\OrderError;
 use Vynyl\Campaigner\Responses\OrderResponse;
 use Vynyl\Campaigner\Responses\OrdersResponse;
+use Vynyl\Campaigner\Responses\ErrorResponse;
 
 class Orders
 {

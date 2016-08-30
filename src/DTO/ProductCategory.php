@@ -13,6 +13,10 @@ class ProductCategory implements Postable
 
     private $url;
 
+    private $id;
+
+    private $parentId;
+
     /**
      * @return mixed
      */
@@ -82,6 +86,42 @@ class ProductCategory implements Postable
     public function setUrl($url)
     {
         $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return ProductCategory
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @param mixed $parentId
+     * @return ProductCategory
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
         return $this;
     }
 
