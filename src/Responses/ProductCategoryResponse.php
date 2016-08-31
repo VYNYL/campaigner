@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jasonallen
- * Date: 8/29/16
- * Time: 6:11 PM
- */
 
 namespace Vynyl\Campaigner\Responses;
-
 
 use Vynyl\Campaigner\DTO\ProductCategory;
 

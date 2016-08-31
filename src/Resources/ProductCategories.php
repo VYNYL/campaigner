@@ -31,6 +31,10 @@ class ProductCategories extends Resource
     {
         $payload = $productCategory->toPost();
         $parentId = $productCategory->getParentId();
+
+        // if this is the root category, specify that by making the parentId -1 and it will make sure the URL doesn't
+        // have a parent ID appended and instead posts straight to /ProductCategories/ for adding the root and not
+        // /ProductCategories/{categoryId} where categoryId is the parent
         $urlExtension = $parentId == -1 ? '' : '/' . $parentId;
 
         $response = $this->connection->post(
@@ -56,7 +60,15 @@ class ProductCategories extends Resource
     public function getCategoryByName($name)
     {
         $response = $this->connection->get('/ProductCategories?categoryName=' . $name);
-        $body = $response->getBody()[0];
+
+        // this campaigner endpoint puts successes in an extra, single element array on successes so we have to unwrap it by grabbing the 0th index
+        // failures do not so we don't have to worry about that
+        if (array_key_exists(0, $response->getBody())) {
+            $body = $response->getBody()[0];
+        }
+        else {
+            $body = $response->getBody();
+        }
         return $this->getResponseFromBody($body);
     }
 
