@@ -50,7 +50,7 @@ class ProductCategories extends Resource
         $payload = $productCategory->toPost();
 
         $response = $this->connection->put(
-            '/ProductCategories/' . $productCategory->getParentId(),
+            '/ProductCategories/' . $productCategory->getId(),
             $payload
         );
         $body = $response->getBody();
