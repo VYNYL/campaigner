@@ -7,6 +7,7 @@ use Vynyl\Campaigner\DTO\Subscriber;
 use Vynyl\Campaigner\DTO\SubscriberCollection;
 use Vynyl\Campaigner\Responses\SubscriberError;
 use Vynyl\Campaigner\Responses\SubscriberResponse;
+use Vynyl\Campaigner\Responses\ErrorResponse;
 
 class Subscribers extends Resource
 {
