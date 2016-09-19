@@ -5,11 +5,11 @@ namespace Vynyl\Campaigner\DTO;
 
 class OrderItem implements Postable
 {
-    private $orderItemId;
+    private $orderItemId = 0;
 
-    private $productId;
+    private $productId = 0;
 
-    private $orderNumber;
+    private $orderNumber = "";
 
     private $emailAddress = "";
 
@@ -27,11 +27,11 @@ class OrderItem implements Postable
 
     private $status = "";
 
-    private $totalAmount;
+    private $totalAmount = 0;
 
-    private $created;
+    private $created = "";
 
-    private $lastUpdated;
+    private $lastUpdated = "";
 
     /**
      * @return mixed
