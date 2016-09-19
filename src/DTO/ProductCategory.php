@@ -5,17 +5,17 @@ namespace Vynyl\Campaigner\DTO;
 class ProductCategory implements Postable
 {
 
-    private $name;
+    private $name = "";
 
-    private $description;
+    private $description = "";
 
-    private $image;
+    private $image = "";
 
-    private $url;
+    private $url = "";
 
-    private $id;
+    private $id = 0;
 
-    private $parentId;
+    private $parentId = 0;
 
     /**
      * @return mixed

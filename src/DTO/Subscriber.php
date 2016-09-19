@@ -4,17 +4,17 @@ namespace Vynyl\Campaigner\DTO;
 
 class Subscriber implements Postable
 {
-    private $emailAddress;
+    private $emailAddress = "";
 
     private $customFields;
 
-    private $sourceId;
+    private $sourceId = 0;
 
     private $publications = [];
 
     private $lists = [];
 
-    private $autoresponderId;
+    private $autoresponderId = 0;
 
     private $orders;
 

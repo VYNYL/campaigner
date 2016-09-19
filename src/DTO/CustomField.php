@@ -4,9 +4,9 @@ namespace Vynyl\Campaigner\DTO;
 
 class CustomField implements Postable
 {
-    private $fieldName;
+    private $fieldName = "";
 
-    private $value;
+    private $value = "";
 
     public function __construct()
     {

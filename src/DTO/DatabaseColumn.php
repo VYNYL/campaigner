@@ -6,15 +6,15 @@ namespace Vynyl\Campaigner\DTO;
 class DatabaseColumn
 {
 
-    private $columnName;
+    private $columnName = "";
 
-    private $columnType;
+    private $columnType = "";
 
-    private $columnSize;
+    private $columnSize = 500;
 
-    private $isCustom;
+    private $isCustom = false;
 
-    private $variable;
+    private $variable = "";
 
     /**
      * @return mixed

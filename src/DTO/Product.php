@@ -5,31 +5,31 @@ namespace Vynyl\Campaigner\DTO;
 
 class Product implements Postable
 {
-    private $productId;
+    private $productId = 0;
 
-    private $productName;
+    private $productName = "";
 
-    private $sku;
+    private $sku = "";
 
-    private $longDescription;
+    private $longDescription = "";
 
-    private $shortDescription;
+    private $shortDescription = "";
 
-    private $productURL;
+    private $productURL = "";
 
-    private $productImage;
+    private $productImage = "";
 
-    private $weight;
+    private $weight = "";
 
-    private $cost;
+    private $cost = 0;
 
-    private $price;
+    private $price = 0;
 
-    private $active;
+    private $active = true;
 
-    private $created;
+    private $created = "";
 
-    private $lastUpdated;
+    private $lastUpdated = "";
 
     private $categories = [];
 

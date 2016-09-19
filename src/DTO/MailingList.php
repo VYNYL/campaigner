@@ -5,15 +5,15 @@ namespace Vynyl\Campaigner\DTO;
 
 class MailingList
 {
-    private $listId;
+    private $listId = 0;
 
-    private $name;
+    private $name = "";
 
-    private $description;
+    private $description = "";
 
-    private $activeMembers;
+    private $activeMembers = 0;
 
-    private $isActive;
+    private $isActive = false;
 
     /**
      * @return mixed
