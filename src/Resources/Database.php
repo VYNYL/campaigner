@@ -53,18 +53,20 @@ class Database
 
         $body = $response->getBody();
         $databaseColumnResponse = null;
-        if ($response->getStatusCode != 201) {
+        if ($response->getStatusCode() != 201) {
             $databaseColumnResponse = (new ErrorResponse())
                 ->setErrorCode($body['ErrorCode'])
                 ->setMessage($body['Message'])
                 ->setIsError(true);
         } else {
-            $databaseColumnResponse = (new DatabaseColumnAddResponse())
-                ->setColumnName($body['ColumnName'])
+            $databaseColumn = new DatabaseColumn();
+            $databaseColumn->setColumnName($body['ColumnName'])
                 ->setColumnSize($body['ColumnSize'])
                 ->setColumnType($body['ColumnType'])
                 ->setIsCustom($body['IsCustom'])
                 ->setVariable($body['Variable']);
+            $databaseColumnResponse = (new DatabaseColumnAddResponse())
+                ->setDatabaseColumn($databaseColumn);
         }
         return $databaseColumnResponse;
     }
