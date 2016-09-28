@@ -18,6 +18,11 @@ class Status extends Resource
 
     public function get()
     {
-        return $this->connection->get('/ping');
+        // TODO: create a full response object for this
+        $response = $this->connection->get('/ping');
+        if ($response->getStatusCode() == 200) {
+            return true;
+        }
+        return false;
     }
 }
