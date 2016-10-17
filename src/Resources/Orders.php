@@ -90,8 +90,8 @@ class Orders
         $body = $response->getBody();
         $ordersResponse = null;
         if (!empty($body['ErrorCode'])) {
-            $ordersResponse = (new ErrorResponse())
-                ->setErrorCode($body['ErrorCode'])
+            $ordersResponse = new ErrorResponse();
+            $ordersResponse->setErrorCode($body['ErrorCode'])
                 ->setMessage($body['Message'])
                 ->setIsError(true);
         } else {

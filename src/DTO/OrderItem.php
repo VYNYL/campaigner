@@ -19,7 +19,7 @@ class OrderItem implements Postable
 
     private $sku = "";
 
-    private $quantity = "";
+    private $quantity = 0;
 
     private $unitPrice = "";
 
@@ -82,6 +82,9 @@ class OrderItem implements Postable
      */
     public function setQuantity($quantity)
     {
+        if (empty($quantity)) {
+            $quantity = 0;
+        }
         $this->quantity = $quantity;
         return $this;
     }
