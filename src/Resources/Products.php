@@ -27,10 +27,7 @@ class Products extends Resource
     public function getBySku($sku)
     {
         $response = $this->connection->get('/Products/SKU/' . $sku);
-        $body = $response->getBody();
-        $productResponse = new ProductResponse();
-        $productResponse->setProduct($this->formProduct($body));
-        return $productResponse;
+        return $this->getProductResponseFromBody($response);;
     }
 
     public function put(Product $product)
