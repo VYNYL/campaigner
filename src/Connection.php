@@ -102,7 +102,7 @@ class Connection
     public function request($method, $resourceUri, $options)
     {
         $url = $this->getFullURL($resourceUri);
-
+        $response = null;
         try {
             $response = $this->client->request($method, $url, $options);
         } catch (RequestException $e) {
@@ -113,8 +113,12 @@ class Connection
         } catch (ServerException $e) {
             throw new CampaignerException("An error occurred while accessing the Campaigner API");
         }
-        $campaignerResponse = $this->buildResponse($response);
-        return $campaignerResponse;
+        if (!empty($response)) {
+            $campaignerResponse = $this->buildResponse($response);
+            return $campaignerResponse;
+        } else {
+            throw new CampaignerException("An error occurred while accessing the Campaigner API");
+        }
     }
 
     /**
@@ -125,8 +129,8 @@ class Connection
         // the Guzzle implementation has changed to PSR-7, so casting to string is now required to bypass streaming interface
         $body = (string) $response->getBody();
 
-        return (new ApiResponse())
-            ->setBody(json_decode($body, true))
+        $response = ApiResponse();
+        $response->setBody(json_decode($body, true))
             ->setStatusCode($response->getStatusCode());
     }
 
