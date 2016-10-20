@@ -2,8 +2,6 @@
 
 namespace Vynyl\Campaigner\Resources;
 
-
-use PhpParser\Error;
 use Vynyl\Campaigner\DTO\DatabaseColumn;
 use Vynyl\Campaigner\Connection;
 use Vynyl\Campaigner\DTO\DatabaseColumnCollection;

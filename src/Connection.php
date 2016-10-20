@@ -132,6 +132,7 @@ class Connection
         $response = new ApiResponse();
         $response->setBody(json_decode($body, true))
             ->setStatusCode($response->getStatusCode());
+        return $response;
     }
 
     public function getFullUrl($resourceUri)
