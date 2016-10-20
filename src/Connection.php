@@ -129,10 +129,10 @@ class Connection
         // the Guzzle implementation has changed to PSR-7, so casting to string is now required to bypass streaming interface
         $body = (string) $response->getBody();
 
-        $response = new ApiResponse();
-        $response->setBody(json_decode($body, true))
+        $apiResponse = new ApiResponse();
+        $apiResponse->setBody(json_decode($body, true))
             ->setStatusCode($response->getStatusCode());
-        return $response;
+        return $apiResponse;
     }
 
     public function getFullUrl($resourceUri)
