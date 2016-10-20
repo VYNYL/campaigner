@@ -2,7 +2,7 @@
 
 namespace Vynyl\Campaigner\Exceptions;
 
-class CampaignerException extends \Exception
+class UnauthenticatedException extends \Exception
 {
 
 }

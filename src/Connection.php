@@ -6,6 +6,8 @@ use \GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response;
+use Vynyl\Campaigner\Exceptions\CampaignerException;
+use Vynyl\Campaigner\Exceptions\UnauthenticatedException;
 use Vynyl\Campaigner\Responses\ApiResponse;
 use Vynyl\Campaigner\Responses\CampaignerResponse;
 
@@ -117,7 +119,7 @@ class Connection
             $campaignerResponse = $this->buildResponse($response);
             return $campaignerResponse;
         } else {
-            throw new CampaignerException("An error occurred while accessing the Campaigner API");
+            throw new UnauthenticatedException("Could not connect to the Campaigner API.");
         }
     }
 
