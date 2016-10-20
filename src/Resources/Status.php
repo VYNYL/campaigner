@@ -20,7 +20,7 @@ class Status extends Resource
     {
         // TODO: create a full response object for this
         $response = $this->connection->get('/ping');
-        if ($response->getStatusCode() == 200) {
+        if ($response && $response->getStatusCode() == 200) {
             return true;
         }
         return false;
