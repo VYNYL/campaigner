@@ -81,7 +81,7 @@ class Connection
         $this->setHeader("Content-Type", "application/json");
         $options = [
             'headers' => $this->headers,
-            'body' => json_encode($payload, JSON_PRETTY_PRINT),
+            'body' => json_encode($payload),
         ];
         return $this->request('POST', $resourceUri, $options);
     }
@@ -96,7 +96,7 @@ class Connection
         $this->setHeader("Content-Type", "application/json");
         $options = [
             'headers' => $this->headers,
-            'body' => json_encode($payload, JSON_PRETTY_PRINT),
+            'body' => json_encode($payload),
         ];
         return $this->request('PUT', $resourceUri, $options);
     }
