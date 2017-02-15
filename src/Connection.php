@@ -119,7 +119,7 @@ class Connection
             $campaignerResponse = $this->buildResponse($response);
             return $campaignerResponse;
         } else {
-            throw new UnauthenticatedException("Could not connect to the Campaigner API.");
+            throw new UnauthenticatedException('No response from server at ' . $url . ' with payload ' . print_r($options, true));
         }
     }
 
