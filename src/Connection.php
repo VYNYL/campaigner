@@ -32,6 +32,17 @@ class Connection
     private $baseUrl;
 
     /**
+     * Number of times to retry before throwing error.
+     * @var integer
+     */
+    private $maxRetries = 2;
+
+    /**
+     * Number of times request has been retried.
+     */
+    private $autoRetries = 0;
+
+    /**
      * Headers to be sent with request;
      * @var array
      */
@@ -115,12 +126,19 @@ class Connection
         } catch (ServerException $e) {
             throw new CampaignerException("An error occurred while accessing the Campaigner API");
         }
-        if (!empty($response)) {
-            $campaignerResponse = $this->buildResponse($response);
-            return $campaignerResponse;
-        } else {
-            throw new UnauthenticatedException('No response from server at ' . $url . ' with payload ' . print_r($options, true));
+        if (empty($response)) {
+            // we received an empty response.  what's up with that?!
+            if ($this->autoRetries > $this->maxRetries) {
+                throw new UnauthenticatedException('No response from server at ' . $method . ' ' . $url . ' with payload ' . print_r($options, true));
+            }
+            $this->autoRetries++;
+            // Sleep for 3 seconds in case empty response was due to an availability issue
+            sleep(3);
+            return $this->request($method, $resourceUri, $options);
         }
+        $this->autoRetries = 0;
+        $campaignerResponse = $this->buildResponse($response);
+        return $campaignerResponse;
     }
 
     /**
