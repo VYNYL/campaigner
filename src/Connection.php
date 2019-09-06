@@ -81,6 +81,19 @@ class Connection
         ];
         return $this->request('GET', $resourceUri, $options);
     }
+    
+    /**
+     * Makes a DELETE request.
+     * @param $resourceUri string
+     * @return CampaignerResponse
+     */
+    public function delete($resourceUri)
+    {
+        $options = [
+        'headers' => $this->headers,
+        ];
+        return $this->request('DELETE', $resourceUri, $options);
+    }
 
     /**
      * Makes a POST request.
